@@ -1,0 +1,16 @@
+server:
+  port: 1666
+spring:
+  application:
+    name: consumer
+  rabbitmq:
+    host: 123.249.19.24
+    port: 5672
+    username: windy
+    password: windy
+    #添加虚拟主机
+    virtual-host: /
+    listener:
+      simple:
+        prefetch: 20
+        acknowledge-mode: manual # 手动ack，默认为auto
