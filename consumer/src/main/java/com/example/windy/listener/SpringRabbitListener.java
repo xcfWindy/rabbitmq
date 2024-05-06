@@ -19,10 +19,16 @@ import java.util.Map;
 @Slf4j
 public class SpringRabbitListener {
 
-    //    @RabbitListener(queues = "simple.queue")
-//    public void listenSimpleQueueMessage(String msg) throws InterruptedException {
-//        System.out.println("spring 消费者接收到消息：【" + msg + "】");
-//    }
+
+    @RabbitListener(queues = "simple.queue")
+    public void listenSimpleQueueMessage(String msg) throws Exception {
+        System.out.println("spring 消费者接收到消息：【" + msg + "】");
+        boolean flag=false;
+        if (!flag){
+            throw new RuntimeException("1");
+        }
+
+    }
     int count1 = 0;
     int count2 = 0;
 
@@ -55,28 +61,28 @@ public class SpringRabbitListener {
 
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(name = "direct.queue1"),
-            exchange = @Exchange(value = "itcast.direct", type = ExchangeTypes.DIRECT),
+            exchange = @Exchange(value = "windy.direct", type = ExchangeTypes.DIRECT),
             key = {"red", "blue"}))
     public void listenDirectQueue1(String msg) {
         log.info("消费者接收到direct.queue1的消息{}", msg);
     }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(name = "direct.queue2"),
-            exchange = @Exchange(value = "itcast.direct", type = ExchangeTypes.DIRECT),
+            exchange = @Exchange(value = "windy.direct", type = ExchangeTypes.DIRECT),
             key = {"red", "yellow"}))
     public void listenDirectQueue2(String msg) {
         log.info("消费者接收到direct.queue2的消息{}", msg);
     }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(name = "topic.queue1"),
-            exchange = @Exchange(value = "itcast.topic", type = ExchangeTypes.TOPIC),
+            exchange = @Exchange(value = "windy.topic", type = ExchangeTypes.TOPIC),
             key = "china.#"))
     public void listenTopicQueue1(String msg) {
         log.info("消费者接收到topic.queue1的消息{}", msg);
     }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "topic.queue2"),
-            exchange = @Exchange(value = "itcast.topic", type = ExchangeTypes.TOPIC),
+            exchange = @Exchange(value = "windy.topic", type = ExchangeTypes.TOPIC),
             key = "#.news"))
     public void listenTopicQueue2(String msg) {
         log.info("消费者接收到topic.queue2的消息{}", msg);

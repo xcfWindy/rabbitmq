@@ -43,7 +43,7 @@ public class SpringAmqpTest {
     @Test
     public void testFanoutExchange() {
         // 队列名称
-        String exchangeName = "itcast.fanout";
+        String exchangeName = "windy.fanout";
         // 消息
         String message = "hello, everyone!";
         rabbitTemplate.convertAndSend(exchangeName, "", message);
@@ -51,11 +51,11 @@ public class SpringAmqpTest {
     @Test
     public void testSendDirectExchange() {
         // 交换机名称
-        String exchangeName = "itcast.direct";
+        String exchangeName = "w1indy.direct";
         // 消息
         String message = "黄色警报！日本乱排核废水，导致海洋生物变异，惊现哥斯拉！";
         // 发送消息
-        rabbitTemplate.convertAndSend(exchangeName, "yellow", message);
+        rabbitTemplate.convertAndSend(exchangeName, "dasdasd", message);
     }
     /**
      * topicExchange
@@ -63,7 +63,7 @@ public class SpringAmqpTest {
     @Test
     public void testSendTopicExchange() {
         // 交换机名称
-        String exchangeName = "itcast.topic";
+        String exchangeName = "windy.topic";
         // 消息
         String message = "喜报！孙悟空大战哥斯拉，胜!";
         // 发送消息

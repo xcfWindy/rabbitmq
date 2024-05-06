@@ -7,6 +7,10 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 基于@Bean的方式声明队列和交换机比较麻烦，Spring还提供了基于注解方式来声明。
+ * 在consumer的SpringRabbitListener中添加两个消费者，同时基于注解来声明队列和交换机：
+ */
 @Configuration
 public class QueueConfig {
     /**
