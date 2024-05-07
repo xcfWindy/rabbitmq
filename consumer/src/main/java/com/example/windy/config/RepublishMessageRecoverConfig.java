@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 //当指定配置生效时才加载这个类
-@ConditionalOnProperty(prefix = "spring.rabbitmq.listener.simple.retry", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "spring.rabbitmq.listener.simple.retry", name = "enabled", havingValue = "true")
 public class RepublishMessageRecoverConfig {
 
     /**
@@ -22,7 +22,7 @@ public class RepublishMessageRecoverConfig {
      */
     @Bean
     public DirectExchange republishExchange(){
-        return new DirectExchange("error.republish");
+        return new DirectExchange("error.exchange");
     }
 
     /**
@@ -43,6 +43,7 @@ public class RepublishMessageRecoverConfig {
     @Bean
     public Binding republishBinding(Queue republishQueue, DirectExchange republishExchange){
         //bind(Queue queue) to(DirectExchange exchange) with(String routingKey)
+
         return BindingBuilder.bind(republishQueue).to(republishExchange).with("error");
     }
 
@@ -53,6 +54,6 @@ public class RepublishMessageRecoverConfig {
     @Bean
     public MessageRecoverer republishMessageRecover(RabbitTemplate rabbitTemplate) {
         //RepublishMessageRecoverer(rabbitTemplate,"交换机","key")
-        return new RepublishMessageRecoverer(rabbitTemplate);
+        return new RepublishMessageRecoverer(rabbitTemplate,"error.exchange","error");
     }
 }

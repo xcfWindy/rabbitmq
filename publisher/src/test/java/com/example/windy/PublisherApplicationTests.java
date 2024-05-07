@@ -4,6 +4,11 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
@@ -40,6 +45,26 @@ class PublisherApplicationTests {
         // 5.关闭通道和连接
         channel.close();
         connection.close();
+
+    }
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Test
+    public void testDlxMessage() {
+        for (int i = 0; i < 20; i++) {
+            rabbitTemplate.convertAndSend("test.dlx.direct", "test.dlx", "我是一条消息，我会死吗？");
+        }
+
+//        rabbitTemplate.convertAndSend("test.dlx.direct", "test.dlx", "我是一条消息，我会死吗？", new MessagePostProcessor() {
+//            @Override
+//            public Message postProcessMessage(Message message) throws AmqpException {
+//                //设置消息的过期时间
+//                message.getMessageProperties().setExpiration("1000");
+//                return message;
+//            }
+//        });
 
     }
 

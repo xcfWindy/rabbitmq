@@ -1,5 +1,6 @@
 package com.example.windy.listener;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class SpringRabbitListener {
 
 
